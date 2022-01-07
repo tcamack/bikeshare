@@ -257,7 +257,7 @@ def user_stats(df, city):
     except KeyError:
         print(f'Data from {city.title()} does not contain gender data.')
 
-    # Display birth year statistics, birth year data is not alwasy present.
+    # Display birth year statistics, birth year data is not always present.
     try:
         oldest = int(df['Birth Year'].min())
         youngest = int(df['Birth Year'].max())
@@ -283,7 +283,7 @@ def display_data(df):
             clear()
             print(df.head())
             while True:
-                view_additional_data = input('Would you like to view five additional '
+                view_additional_data = input('\nWould you like to view five additional '
                                              'lines of raw data? Enter yes or no.\n')
                 if view_additional_data.lower() == 'yes':
                     line += 5
@@ -294,14 +294,14 @@ def display_data(df):
                     break
                 else:
                     clear()
-                    print('Input not recognized.\n')
+                    print('Input not recognized.')
             break
         elif view_data.lower() == 'no':
             clear()
             break
         else:
             clear()
-            print('Input not recognized.\n')
+            print('Input not recognized.')
 
 
 def main():
