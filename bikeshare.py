@@ -272,6 +272,37 @@ def user_stats(df, city):
     print('-' * 50)
 
 
+def display_data(df):
+    """Display rows of data from the .csv data file for the selected city."""
+    line = 0
+
+    while True:
+        view_data = input('\nWould you like to view five lines of raw data? '
+                          'Enter yes or no.\n')
+        if view_data.lower() == 'yes':
+            clear()
+            print(df.head())
+            while True:
+                view_additional_data = input('Would you like to view five additonal '
+                                             'lines of raw data? Enter yes or no.\n')
+                if view_additional_data.lower() == 'yes':
+                    line += 5
+                    print(df[line:line + 5])
+                elif view_additional_data.lower() == 'no':
+                    clear()
+                    break
+                else:
+                    clear()
+                    print('Input not recognized.\n')
+            break
+        elif view_data.lower() == 'no':
+            clear()
+            break
+        else:
+            clear()
+            print('Input not recognized.\n')
+
+
 def main():
     """Initialize main variables and dataframe from imported .csv file."""
     while True:
@@ -279,6 +310,7 @@ def main():
         df = load_data(city, month, day)
 
         if df is not None:
+            display_data(df)
             time_stats(df)
             station_stats(df)
             trip_duration_stats(df)
