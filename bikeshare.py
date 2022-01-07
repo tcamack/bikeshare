@@ -1,4 +1,4 @@
-"""Bikeshare data parser."""
+"""Bikeshare data analysis."""
 
 import os
 import time
