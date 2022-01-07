@@ -257,7 +257,7 @@ def user_stats(df, city):
     except KeyError:
         print(f'Data from {city.title()} does not contain gender data.')
 
-    # Display birth year statistics, birth year data is not alwasy present.
+    # Display birth year statistics, birth year data is not always present.
     try:
         oldest = int(df['Birth Year'].min())
         youngest = int(df['Birth Year'].max())
@@ -279,13 +279,13 @@ def main():
         df = load_data(city, month, day)
 
         if df is not None:
+            print(f'\nDisplaying bikeshare data from {city.title()}'
+                  f'{f" for every {day.title()}" if (day != "all") else ""} in '
+                  f'{month.title() if (MONTH_DATA[month] != 7) else "January until June"}.\n')
             time_stats(df)
             station_stats(df)
             trip_duration_stats(df)
             user_stats(df, city)
-            print(f'\nDisplaying bikeshare data from {city.title()} for every '
-                  f'{f"{day.title()}" if (day != "all") else "day"} in '
-                  f'{month.title() if (MONTH_DATA[month] != 7) else "January until June"}.\n')
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
