@@ -59,10 +59,10 @@ def get_filters():
         (str) month - name of the month to filter by, or "all" to apply no month filter
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
-    clear()
     city_temp = ''
     month_temp = ''
     day_temp = ''
+    clear()
     print('Hello! Let\'s explore some US bikeshare data!')
 
     while city_temp not in CITY_DATA.keys():
@@ -148,17 +148,23 @@ def load_data(city, month, day):
 
         if day != 'all':
             df = df[df['day'] == day.title()]
-    except FileNotFoundError as file_error:
-        print(f'Failed to locate "{CITY_DATA[city]}" file.')
-        print('Data files should be located in the /data/ '
+    except FileNotFoundError:
+        df = None
+        clear()
+        print(f'Failed to locate ".{CITY_DATA[city]}" file.')
+        print('Data files should be located in the ./data '
               'folder in the source directory.')
-        print(file_error)
-    except pd.errors.EmptyDataError as data_error:
-        print(f'Error importing "{CITY_DATA[city]}" data file.')
-        print('File appears to be empty or is missing headers.')
+        print('-' * 50)
+    except pd.errors.EmptyDataError:
+        df = None
+        clear()
+        print(f'Error importing ".{CITY_DATA[city]}" file.')
+        print('The file is empty or is missing headers.')
+        print('-' * 50)
 
-    if not df.empty:
+    if df is not None:
         print(f'Data successfully loaded for {city.title()}.')
+        print('\n' + '-' * 50)
 
     return df
 
@@ -272,17 +278,18 @@ def main():
         city, month, day = get_filters()
         df = load_data(city, month, day)
 
-        time_stats(df)
-        station_stats(df)
-        trip_duration_stats(df)
-        user_stats(df, city)
-
-        print(f'\nDisplaying bikeshare data from {city.title()} for every '
-              f'{f"{day.title()}" if (day != "all") else "day of the week"} in '
-              f'{month.title() if (MONTH_DATA[month] != 7) else "January until June."}\n')
+        if df is not None:
+            time_stats(df)
+            station_stats(df)
+            trip_duration_stats(df)
+            user_stats(df, city)
+            print(f'\nDisplaying bikeshare data from {city.title()} for every '
+                  f'{f"{day.title()}" if (day != "all") else "day"} in '
+                  f'{month.title() if (MONTH_DATA[month] != 7) else "January until June"}.\n')
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
+            clear()
             break
 
 
