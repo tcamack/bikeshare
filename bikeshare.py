@@ -283,10 +283,11 @@ def display_data(df):
             clear()
             print(df.head())
             while True:
-                view_additional_data = input('Would you like to view five additonal '
+                view_additional_data = input('Would you like to view five additional '
                                              'lines of raw data? Enter yes or no.\n')
                 if view_additional_data.lower() == 'yes':
                     line += 5
+                    clear()
                     print(df[line:line + 5])
                 elif view_additional_data.lower() == 'no':
                     clear()
@@ -311,13 +312,14 @@ def main():
 
         if df is not None:
             display_data(df)
+            print(f'\nDisplaying bikeshare data from {city.title()}'
+                  f'{f" for every {day.title()}" if (day != "all") else ""} in '
+                  f'{month.title() if (MONTH_DATA[month] != 7) else "January until June"}.\n')
+            print('-' * 50)
             time_stats(df)
             station_stats(df)
             trip_duration_stats(df)
             user_stats(df, city)
-            print(f'\nDisplaying bikeshare data from {city.title()} for every '
-                  f'{f"{day.title()}" if (day != "all") else "day"} in '
-                  f'{month.title() if (MONTH_DATA[month] != 7) else "January until June"}.\n')
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
